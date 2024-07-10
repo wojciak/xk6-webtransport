@@ -9,12 +9,14 @@ import (
 )
 
 func (c *Connection) Write(p []byte) {
-	n, err := c.activeStream.Write(p)
-	defer c.logWriteMetrics(n)
-	if err != nil {
-		log.Println("Write error: " + err.Error())
-		if n != len(p) {
-			log.Println("Wrote n: " + strconv.Itoa(n) + " bytes instead of the expected: " + strconv.Itoa(len(p)))
+	if c != nil && c.c.activeStream.Write != nil {
+		n, err := c.activeStream.Write(p)
+		defer c.logWriteMetrics(n)
+		if err != nil {
+			log.Println("Write error: " + err.Error())
+			if n != len(p) {
+				log.Println("Wrote n: " + strconv.Itoa(n) + " bytes instead of the expected: " + strconv.Itoa(len(p)))
+			}
 		}
 	}
 }
