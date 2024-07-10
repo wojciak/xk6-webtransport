@@ -9,7 +9,7 @@ import (
 )
 
 func (c *Connection) Write(p []byte) {
-	if c != nil && c.activeStream.Write != nil {
+	if c != nil && c.activeStream != nil {
 		n, err := c.activeStream.Write(p)
 		defer c.logWriteMetrics(n)
 		if err != nil {
