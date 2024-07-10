@@ -33,8 +33,11 @@ func (c *Connection) Close() {
 	if c.activeStream != nil {
 		c.CloseAllStreams()
 	}
-	err := c.Session.CloseWithError(0, "")
-	if err != nil {
-		log.Println("Error: " + err.Error())
+
+	if c.Session != nil {
+		err := c.Session.CloseWithError(0, "")
+		if err != nil {
+			log.Println("Error: " + err.Error())
+		}
 	}
 }
