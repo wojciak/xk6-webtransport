@@ -13,9 +13,17 @@ func (c *Connection) OpenStream() int64 {
 		log.Println("Stream error: " + err.Error())
 	}
 	c.activeStream = str
-	c.streams[int64(str.StreamID())] = str
 
-	return int64(str.StreamID())
+	if c.streams != nil && str != nil {
+        	val, ok = c.streams[int64(str.StreamID())]
+
+		if ok {
+		      c.streams[int64(str.StreamID())] = str
+		      return int64(str.StreamID())
+		}
+	}
+
+	return 0
 }
 
 func (c *Connection) CloseStream() {
