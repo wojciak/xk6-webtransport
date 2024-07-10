@@ -15,7 +15,7 @@ func (c *Connection) OpenStream() int64 {
 	c.activeStream = str
 
 	if c.streams != nil && str != nil {
-		val, ok := c.streams[int64(str.StreamID())]
+		_, ok := c.streams[int64(str.StreamID())]
 
 		if ok {
 		      c.streams[int64(str.StreamID())] = str
