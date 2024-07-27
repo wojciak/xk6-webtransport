@@ -22,7 +22,7 @@ func (c *Connection) Connect(url string) {
 	_, sess, err := dialer.Dial(context.Background(), url, nil)
 	if err != nil {
 		log.Println("Error: " + err.Error())
-		return
+		return err.Error()
 	}
 	c.Session = sess
 
