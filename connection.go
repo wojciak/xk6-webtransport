@@ -17,16 +17,18 @@ type Connection struct {
 	streams      map[int64]webtransport.Stream
 }
 
-func (c *Connection) Connect(url string) {
+func (c *Connection) Connect(url string) bool {
 	var dialer webtransport.Dialer
 	_, sess, err := dialer.Dial(context.Background(), url, nil)
 	if err != nil {
 		log.Println("Error: " + err.Error())
-		return err.Error()
+		return false
 	}
 	c.Session = sess
 
 	c.streams = make(map[int64]webtransport.Stream)
+
+	return true
 }
 
 func (c *Connection) Close() {
